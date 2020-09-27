@@ -51,8 +51,8 @@ class JsonAdaptedPerson {
             this.tagged.addAll(tagged);
         }
         //temporary values
-        this.itemName = "prata";
-        this.quantity = "0";
+        this.itemName = "Prata";
+        this.quantity = "1";
     }
     /**
      * Converts a given {@code Person} into this class for Jackson use.
