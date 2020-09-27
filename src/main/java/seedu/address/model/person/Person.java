@@ -24,16 +24,39 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
 
+    //SUPPER STRIKER fields
+    private final String itemName;
+    private final int quantity;
+
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String itemName, int quantity) {
+
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+
+        requireAllNonNull(itemName, quantity);
+        this.itemName = itemName;
+        this.quantity = quantity;
+    }
+
+    /**
+     * Old constructor to be deleted
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tagList) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tags.addAll(tags);
+        this.itemName = "Prata";
+        this.quantity = 1;
     }
 
     public Name getName() {
@@ -50,6 +73,14 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     /**

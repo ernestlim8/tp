@@ -59,11 +59,13 @@ public class StorageManager implements Storage {
         return readAddressBook(addressBookStorage.getAddressBookFilePath());
     }
 
+
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return addressBookStorage.readAddressBook(filePath);
     }
+
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {

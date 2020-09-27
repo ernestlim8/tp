@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
 
+
 /**
  * An UI component that displays information of a {@code Person}.
  */
@@ -41,6 +42,12 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    //SUPPER STRIKERS
+    @FXML
+    private Label itemName;
+    @FXML
+    private Label quantity;
+
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
@@ -55,6 +62,10 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+
+        //SUPPER STRIKERS
+        itemName.setText(String.format("Menu Item: %s", person.getItemName()));
+        quantity.setText(String.format("Quantity: %s", person.getQuantity()));
     }
 
     @Override

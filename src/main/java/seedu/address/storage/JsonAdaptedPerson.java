@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -23,6 +24,7 @@ import seedu.address.model.tag.Tag;
 class JsonAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String INVALID_QUANTITY_MESSAGE_FORMAT = "Quantity provided is invalid!";
 
     private final String name;
     private final String phone;
@@ -30,13 +32,17 @@ class JsonAdaptedPerson {
     private final String address;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
+    private final String itemName;
+    private final String quantity;
+
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+                             @JsonProperty("email") String email, @JsonProperty("address") String address,
+                             @JsonProperty("tagged") List<JsonAdaptedTag> tagged
+                             ) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -44,8 +50,10 @@ class JsonAdaptedPerson {
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
+        //temporary values
+        this.itemName = "prata";
+        this.quantity = "0";
     }
-
     /**
      * Converts a given {@code Person} into this class for Jackson use.
      */
@@ -57,6 +65,8 @@ class JsonAdaptedPerson {
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        itemName = source.getItemName();
+        quantity = Integer.toString(source.getQuantity());
     }
 
     /**
@@ -103,7 +113,22 @@ class JsonAdaptedPerson {
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+
+        if (itemName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "item"));
+        }
+
+        if (quantity == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "quantity"));
+        }
+
+        Pattern pattern = Pattern.compile("^[0-9]+");
+        if (!pattern.matcher(quantity).matches() && Integer.parseInt(quantity) > 0) {
+            throw new IllegalValueException(String.format(INVALID_QUANTITY_MESSAGE_FORMAT, "quantity"));
+        }
+
+        final int modelQuantity = Integer.parseInt(quantity);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, itemName, modelQuantity);
     }
 
 }
