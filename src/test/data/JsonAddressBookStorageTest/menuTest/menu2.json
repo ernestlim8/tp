@@ -1,0 +1,19 @@
+{
+  "persons" : [ {
+    "name" : "Menu Item 1",
+    "phone" : "12345678",
+    "email" : "alexyeoh@example.com",
+    "address" : "Blk 30 Geylang Street 29, #06-40",
+    "tagged" : [],
+    "itemName": "Nugget",
+    "quantity": 1
+  }, {
+    "name" : "Menu Item 2",
+    "phone" : "98765432",
+    "email" : "menu@mail.com",
+    "address" : "Blk 30 Geylang Street 29, #06-41",
+    "tagged" : [],
+    "itemName": "Milo",
+    "quantity": 2
+  }]
+}

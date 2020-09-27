@@ -21,6 +21,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 
 public class JsonAddressBookStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest");
+    private static final Path TEST_MENU_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest", "menuTest");
+
 
     @TempDir
     public Path testFolder;
@@ -106,5 +108,13 @@ public class JsonAddressBookStorageTest {
     @Test
     public void saveAddressBook_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> saveAddressBook(new AddressBook(), null));
+    }
+
+    @Test
+    public void readMenus_success() throws DataConversionException {
+        Path filePath = testFolder.resolve("TempAddressBook.json");
+        JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filePath);
+        jsonAddressBookStorage.readMenus(TEST_MENU_DATA_FOLDER);
+        assertEquals(1,1);
     }
 }

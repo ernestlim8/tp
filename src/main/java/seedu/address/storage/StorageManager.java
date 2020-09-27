@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -66,6 +67,12 @@ public class StorageManager implements Storage {
         return addressBookStorage.readAddressBook(filePath);
     }
 
+//    @Override
+//    public List<Optional<ReadOnlyAddressBook>> readMenus(Path folderPath) throws DataConversionException, IOException {
+//        logger.fine("Attempting to read menus from file: " + folderPath);
+//        return addressBookStorage.readMen
+//    }
+//
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {

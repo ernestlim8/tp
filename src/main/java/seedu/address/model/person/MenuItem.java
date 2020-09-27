@@ -13,7 +13,7 @@ import seedu.address.model.tag.Tag;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Person {
+public class MenuItem {
 
     // Identity fields
     private final Name name;
@@ -31,7 +31,7 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String itemName, int quantity) {
+    public MenuItem(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String itemName, int quantity) {
 
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
@@ -48,7 +48,7 @@ public class Person {
     /**
      * Old constructor to be deleted
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public MenuItem(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -95,7 +95,7 @@ public class Person {
      * Returns true if both persons of the same name have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two persons.
      */
-    public boolean isSamePerson(Person otherPerson) {
+    public boolean isSamePerson(MenuItem otherPerson) {
         if (otherPerson == this) {
             return true;
         }
@@ -115,11 +115,11 @@ public class Person {
             return true;
         }
 
-        if (!(other instanceof Person)) {
+        if (!(other instanceof MenuItem)) {
             return false;
         }
 
-        Person otherPerson = (Person) other;
+        MenuItem otherPerson = (MenuItem) other;
         return otherPerson.getName().equals(getName())
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getEmail().equals(getEmail())
