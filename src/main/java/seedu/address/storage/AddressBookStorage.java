@@ -2,6 +2,7 @@ package seedu.address.storage;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
@@ -18,6 +19,11 @@ public interface AddressBookStorage {
     Path getAddressBookFilePath();
 
     /**
+     * Returns the folder path storing menu files.
+     */
+    Path getMenuFolderPath();
+
+    /**
      * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
@@ -30,6 +36,18 @@ public interface AddressBookStorage {
      */
     Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException, IOException;
 
+    /**
+     * Returns A List of menu data as a {@link ReadOnlyAddressBook}.
+     *   Returns {@code new ArrayList<>()} if storage file is not found.
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException if there was any problem when reading from the storage.
+     */
+    List<Optional<ReadOnlyAddressBook>> readMenus() throws DataConversionException, IOException;
+
+    /**
+     * @see #getAddressBookFilePath()
+     */
+    List<Optional<ReadOnlyAddressBook>> readMenus(Path folderPath) throws DataConversionException, IOException;
 
     /**
      * Saves the given {@link ReadOnlyAddressBook} to the storage.

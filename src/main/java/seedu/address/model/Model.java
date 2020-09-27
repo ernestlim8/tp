@@ -52,6 +52,8 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+
+
     /**
      * Returns true if a person with the same identity as {@code person} exists in the address book.
      */
@@ -78,6 +80,9 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<MenuItem> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered menu list */
+    public ObservableList<MenuItem> getFilteredMenu(int index);
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

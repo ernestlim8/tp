@@ -14,6 +14,9 @@ public class CommandResult {
     /** Help information should be shown to the user. */
     private final boolean showHelp;
 
+    /** Menu should be shown to the user **/
+    private final boolean isMenu;
+
     /** The application should exit. */
     private final boolean exit;
 
@@ -24,7 +27,19 @@ public class CommandResult {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
+        this.isMenu = false;
     }
+
+    /**
+     * Constructs a {@code CommandResult} with the specified fields for the menu command.
+     */
+    public CommandResult(String feedbackToUser, boolean isMenu) {
+        this.feedbackToUser = requireNonNull(feedbackToUser);
+        this.showHelp = false;
+        this.exit = false;
+        this.isMenu = isMenu;
+    }
+
 
     /**
      * Constructs a {@code CommandResult} with the specified {@code feedbackToUser},

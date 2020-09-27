@@ -11,6 +11,8 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -20,8 +22,10 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 
 public class JsonAddressBookStorageTest {
-    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest");
-    private static final Path TEST_MENU_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest", "menuTest");
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data",
+            "JsonAddressBookStorageTest");
+    private static final Path TEST_MENU_DATA_FOLDER = Paths.get("src", "test",
+            "data", "JsonAddressBookStorageTest", "menuTest");
 
 
     @TempDir
@@ -33,7 +37,8 @@ public class JsonAddressBookStorageTest {
     }
 
     private java.util.Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws Exception {
-        return new JsonAddressBookStorage(Paths.get(filePath)).readAddressBook(addToTestDataPathIfNotNull(filePath));
+        return new JsonAddressBookStorage(Paths.get(filePath),
+                TEST_MENU_DATA_FOLDER).readAddressBook(addToTestDataPathIfNotNull(filePath));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
@@ -66,7 +71,7 @@ public class JsonAddressBookStorageTest {
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAddressBook.json");
         AddressBook original = getTypicalAddressBook();
-        JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filePath);
+        JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filePath, TEST_MENU_DATA_FOLDER);
 
         // Save in new file and read back
         jsonAddressBookStorage.saveAddressBook(original, filePath);
@@ -98,7 +103,7 @@ public class JsonAddressBookStorageTest {
      */
     private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
         try {
-            new JsonAddressBookStorage(Paths.get(filePath))
+            new JsonAddressBookStorage(Paths.get(filePath), TEST_MENU_DATA_FOLDER)
                     .saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
             throw new AssertionError("There should not be an error writing to the file.", ioe);
@@ -113,8 +118,8 @@ public class JsonAddressBookStorageTest {
     @Test
     public void readMenus_success() throws DataConversionException {
         Path filePath = testFolder.resolve("TempAddressBook.json");
-        JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filePath);
-        jsonAddressBookStorage.readMenus(TEST_MENU_DATA_FOLDER);
-        assertEquals(1,1);
+        JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filePath, TEST_MENU_DATA_FOLDER);
+        List<Optional<ReadOnlyAddressBook>> menus = jsonAddressBookStorage.readMenus(TEST_MENU_DATA_FOLDER);
+        assertEquals(1, 1);
     }
 }

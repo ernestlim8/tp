@@ -144,6 +144,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<MenuItem> getFilteredMenu(int index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<MenuItem> predicate) {
             throw new AssertionError("This method should not be called.");
         }

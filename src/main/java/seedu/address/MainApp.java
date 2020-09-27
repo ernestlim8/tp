@@ -2,6 +2,7 @@ package seedu.address;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -57,7 +58,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
+        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath(),
+                userPrefs.getMenuFolderPath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
         initLogging(config);
@@ -77,8 +79,8 @@ public class MainApp extends Application {
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
 
-        //Current implementation only supports 1 menu
-        Optional<List<ReadOnlyAddressBook>> menusOptional;
+        List<Optional<ReadOnlyAddressBook>> menusOptional;
+        List<ReadOnlyAddressBook> menus = new ArrayList<>();
 
         ReadOnlyAddressBook initialData;
 
@@ -89,15 +91,22 @@ public class MainApp extends Application {
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
 
+            menusOptional = storage.readMenus();
+            // remove null values
+            for (Optional<ReadOnlyAddressBook> item: menusOptional) {
+                item.ifPresent(menus::add);
+            }
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            menus = new ArrayList<>();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            menus = new ArrayList<>();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, userPrefs, menus);
     }
 
     private void initLogging(Config config) {

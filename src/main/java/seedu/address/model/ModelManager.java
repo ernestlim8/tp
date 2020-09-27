@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -20,6 +21,8 @@ public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final List<ReadOnlyAddressBook> menuBook;
+
     private final UserPrefs userPrefs;
     private final FilteredList<MenuItem> filteredPersons;
 
@@ -35,10 +38,27 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.menuBook = null;
     }
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
+    }
+
+    /**
+     * Initializes a ModelManager with the given addressbook, userPrefs and menus
+     */
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs,
+                        List<ReadOnlyAddressBook> menuBook) {
+        super();
+        requireAllNonNull(addressBook, userPrefs);
+
+        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+
+        this.addressBook = new AddressBook(addressBook);
+        this.menuBook = menuBook;
+        this.userPrefs = new UserPrefs(userPrefs);
+        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -122,6 +142,16 @@ public class ModelManager implements Model {
     public ObservableList<MenuItem> getFilteredPersonList() {
         return filteredPersons;
     }
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * {@code versionedAddressBook}
+     */
+    @Override
+    public ObservableList<MenuItem> getFilteredMenu(int index) {
+        return new FilteredList<>(this.menuBook.get(index).getPersonList());
+    }
+
 
     @Override
     public void updateFilteredPersonList(Predicate<MenuItem> predicate) {

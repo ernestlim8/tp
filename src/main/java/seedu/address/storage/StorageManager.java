@@ -56,6 +56,11 @@ public class StorageManager implements Storage {
     }
 
     @Override
+    public Path getMenuFolderPath() {
+        return addressBookStorage.getMenuFolderPath();
+    }
+
+    @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
         return readAddressBook(addressBookStorage.getAddressBookFilePath());
     }
@@ -67,12 +72,17 @@ public class StorageManager implements Storage {
         return addressBookStorage.readAddressBook(filePath);
     }
 
-//    @Override
-//    public List<Optional<ReadOnlyAddressBook>> readMenus(Path folderPath) throws DataConversionException, IOException {
-//        logger.fine("Attempting to read menus from file: " + folderPath);
-//        return addressBookStorage.readMen
-//    }
-//
+    @Override
+    public List<Optional<ReadOnlyAddressBook>> readMenus() throws DataConversionException, IOException {
+        return readMenus(addressBookStorage.getMenuFolderPath());
+    }
+
+    @Override
+    public List<Optional<ReadOnlyAddressBook>> readMenus(Path folderPath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read menus from file: " + folderPath);
+        return addressBookStorage.readMenus(folderPath);
+    }
+
 
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {

@@ -31,7 +31,8 @@ public class MenuItem {
     /**
      * Every field must be present and not null.
      */
-    public MenuItem(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String itemName, int quantity) {
+    public MenuItem(Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                    String itemName, int quantity) {
 
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;

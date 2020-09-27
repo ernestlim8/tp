@@ -20,6 +20,7 @@ public class PersonListPanel extends UiPart<Region> {
     @FXML
     private ListView<MenuItem> personListView;
 
+
     /**
      * Creates a {@code PersonListPanel} with the given {@code ObservableList}.
      */
