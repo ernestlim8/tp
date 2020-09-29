@@ -15,7 +15,7 @@ public class CommandResult {
     private final boolean showHelp;
 
     /** Menu should be shown to the user **/
-    private final boolean isMenu;
+    private boolean isMenu;
 
     /** The application should exit. */
     private final boolean exit;
@@ -59,6 +59,10 @@ public class CommandResult {
 
     public boolean isExit() {
         return exit;
+    }
+
+    public boolean isMenu() {
+        return this.isMenu;
     }
 
     @Override

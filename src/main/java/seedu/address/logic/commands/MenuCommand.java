@@ -14,7 +14,6 @@ public class MenuCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
-        // stub
-        return new CommandResult("Sample Menu");
+        return new CommandResult("Showing menu....", true);
     }
 }

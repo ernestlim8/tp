@@ -27,7 +27,8 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final AddressBookParser addressBookParser;
-
+    private boolean isMenu;
+    private int vendorIndex = 1;
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
      */
@@ -44,6 +45,7 @@ public class LogicManager implements Logic {
         CommandResult commandResult;
         Command command = addressBookParser.parseCommand(commandText);
         commandResult = command.execute(model);
+        isMenu = commandResult.isMenu();
 
         try {
             storage.saveAddressBook(model.getAddressBook());
@@ -61,7 +63,11 @@ public class LogicManager implements Logic {
 
     @Override
     public ObservableList<MenuItem> getFilteredPersonList() {
-        return model.getFilteredPersonList();
+        if (this.isMenu) {
+            return model.getFilteredMenu(vendorIndex);
+        } else {
+            return model.getFilteredPersonList();
+        }
     }
 
     @Override

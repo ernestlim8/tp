@@ -168,6 +168,14 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Re-Renders the list panel to toggle between vendor and menu displays.
+     */
+    public void reRenderListPanel() {
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    /**
      * Executes the command and returns the result.
      *
      * @see seedu.address.logic.Logic#execute(String)
@@ -184,6 +192,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isMenu()) {
+                reRenderListPanel();
             }
 
             return commandResult;
