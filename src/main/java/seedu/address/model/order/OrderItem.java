@@ -22,6 +22,7 @@ public class OrderItem extends Food {
     public OrderItem(String name, double price, Set<Tag> tags, int quantity) {
         super(name, price, tags);
         requireAllNonNull(quantity);
+        assert isValidQuantity(quantity);
         this.quantity = quantity;
     }
 

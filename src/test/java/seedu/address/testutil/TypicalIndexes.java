@@ -9,4 +9,8 @@ public class TypicalIndexes {
     public static final Index INDEX_FIRST_VENDOR = Index.fromOneBased(1);
     public static final Index INDEX_SECOND_VENDOR = Index.fromOneBased(2);
     public static final Index INDEX_THIRD_VENDOR = Index.fromOneBased(3);
+
+    private TypicalIndexes() {
+        // prevents instantiation
+    }
 }

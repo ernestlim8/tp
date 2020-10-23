@@ -5,8 +5,11 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.LogicManager;
 
 /**
  * Wraps all data at the address-book level
@@ -16,6 +19,7 @@ public class OrderManager implements ReadOnlyOrderManager {
 
     private final Stack<Order> orderHistory; // head of orderHistory
     private final Order order;
+    private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -48,6 +52,7 @@ public class OrderManager implements ReadOnlyOrderManager {
      * Undoes the last change to the order.
      */
     public void undoChanges() {
+        logger.info("Undoing changes in Order.");
         assert(orderHistory.size() > 1);
         orderHistory.pop();
         order.setOrder(orderHistory.peek().makeCopy());
@@ -71,6 +76,7 @@ public class OrderManager implements ReadOnlyOrderManager {
         this.orderHistory.clear();
         this.order.setOrderItems(new ArrayList<>());
         saveChanges();
+        logger.info("Order has been reset.");
     }
 
     /**

@@ -55,6 +55,7 @@ public class AddCommand extends Command {
         ObservableList<Food> menu = model.getFilteredFoodList(model.getVendorIndex());
         int index = addIndex.getZeroBased();
 
+        assert menu.size() > 0;
         if (menu.size() <= index) {
             throw new CommandException(ParserUtil.MESSAGE_INVALID_ORDERITEM_DISPLAYED_INDEX);
         }

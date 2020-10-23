@@ -30,7 +30,7 @@ class JsonAdaptedVendor {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
-    private List<JsonAdaptedFood> menu = new ArrayList<>();
+    private List<JsonAdaptedFood> foods = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedVendor} with the given vendor details.
@@ -47,7 +47,7 @@ class JsonAdaptedVendor {
             this.tagged.addAll(tagged);
         }
         if (foodList != null) {
-            this.menu.addAll(foodList);
+            this.foods.addAll(foodList);
         }
     }
 
@@ -62,7 +62,7 @@ class JsonAdaptedVendor {
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
-        menu.addAll(source.getMenu().getFoods());
+        foods.addAll(source.getMenu().getFoods());
         //TODO add a value in menu
     }
 
@@ -77,7 +77,7 @@ class JsonAdaptedVendor {
             vendorTags.add(tag.toModelType());
         }
         final Menu vendorMenu = new Menu();
-        for (JsonAdaptedFood food : menu) {
+        for (JsonAdaptedFood food : foods) {
             vendorMenu.add(food.toModelType());
         }
 
@@ -111,16 +111,13 @@ class JsonAdaptedVendor {
         if (!Address.isValidAddress(address)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
-
-        if (menu == null) {
-            // todo change error message
-            throw new IllegalValueException("MENU CANNOT BE NULL");
+        if (foods.size() == 0) {
+            throw new IllegalValueException(Menu.MESSAGE_EMPTY_MENU);
         }
         final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(vendorTags);
 
-        //TODO: check the menu
         return new Vendor(modelName, modelPhone, modelEmail, modelAddress, modelTags, vendorMenu);
     }
 

@@ -29,6 +29,7 @@ import seedu.address.storage.JsonAdaptedFood;
  */
 public class Menu implements Iterable<Food> {
 
+    public static final String MESSAGE_EMPTY_MENU = "Menu cannot be empty!";
     private final ObservableList<Food> internalList = FXCollections.observableArrayList();
     private final ObservableList<Food> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
